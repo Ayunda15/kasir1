@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator with History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="calculator" class="calculator">
+    <div type="text" id="display"></div>
+    <div class="container-body">
+        <button class="tombol operator" onclick="clearDisplay('')">C</button>
+            <button class="tombol operator" onclick="backspace('<')"><</button>
+            <button class="tombol operator" onclick="addToDisplay('.')">.</button>
+            <button class="tombol operator" onclick="addToDisplay('/')">/</button>
+            <button class="tombol" onclick="addToDisplay('7')">7</button>
+            <button class="tombol" onclick="addToDisplay('8')">8</button>
+            <button class="tombol" onclick="addToDisplay('9')">9</button>
+            <button class="tombol operator" onclick="addToDisplay('*')">*</button>
+            <button class="tombol" onclick="addToDisplay('4')">4</button>
+            <button class="tombol" onclick="addToDisplay('5')">5</button>
+            <button class="tombol" onclick="addToDisplay('6')">6</button>
+            <button class="tombol operator" onclick="addToDisplay('+')">+</button>
+            <button class="tombol" onclick="addToDisplay('1')">1</button>
+            <button class="tombol" onclick="addToDisplay('2')">2</button>
+            <button class="tombol" onclick="addToDisplay('3')">3</button>
+            <button class="tombol operator" onclick="addToDisplay('-')">-</button>
+            <button class="tombol nol" onclick="addToDisplay('0')">0</button>
+            <button class="tombol hasil" onclick="calculate()">=</button>
+
+    </div><div id="history">
+        <h3>History</h3>
+        <hr>
+        <ul id="historyList"></ul>
+    </div>
+</div>
+
+
+
+<script>
+    let display = document.getElementById('display');
+    let historyList = document.getElementById('historyList');
+    let historyItems = [];
+
+    function addToDisplay(value) {
+        display.textContent += value;
+    }
+
+    function clearDisplay() {
+        display.textContent = '';
+    }
+
+    function calculate() {
+        try {
+            let result = eval(display.textContent);
+            addToHistory(display.textContent + ' = ' + result);
+            display.textContent = result;
+        } catch (error) {
+            display.textContent = 'Error';
+        }
+    }
+
+    function addToHistory(item) {
+        historyItems.push(item);
+        updateHistoryList();
+    }
+
+    function updateHistoryList() {
+        historyList.innerHTML = '';
+        historyItems.forEach(item => {
+            let li = document.createElement('li');
+            li.textContent = item;
+            historyList.appendChild(li);
+        });
+    }
+</script>
+
+</body>
+</html>
